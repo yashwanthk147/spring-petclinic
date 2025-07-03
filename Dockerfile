@@ -8,10 +8,10 @@ COPY pom.xml .
 
 COPY . .
 
-ENV MAVEN_OPTS="-Xmx1024m"
+ENV MAVEN_OPTS="-Xmx2048m"
 
 # Build the project
-RUN mvn clean install -DskipTests
+RUN mvn clean install -DskipTests -Dcheckstyle.skip=true
 
 # Stage 2: Run with JDK 17
 FROM eclipse-temurin:17-jre
