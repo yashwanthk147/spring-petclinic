@@ -214,6 +214,44 @@
         </executions>
       </plugin>
       <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-pmd-plugin</artifactId>
+      <version>3.21.2</version>
+      <executions>
+        <execution>
+          <id>generate-pmd-report</id>
+          <phase>verify</phase>
+          <goals>
+            <goal>pmd</goal>
+            <goal>cpd</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+
+    <!-- ✅ SpotBugs Plugin -->
+    <plugin>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs-maven-plugin</artifactId>
+      <version>4.7.3.0</version>
+      <executions>
+        <execution>
+          <id>spotbugs-report</id>
+          <phase>verify</phase>
+          <goals>
+            <goal>spotbugs</goal>
+          </goals>
+        </execution>
+      </executions>
+      <configuration>
+        <effort>Max</effort>
+        <threshold>Low</threshold>
+        <xmlOutput>true</xmlOutput>
+        <outputDirectory>${project.build.directory}</outputDirectory>
+      </configuration>
+      </plugin>
+      
+      <plugin>
         <groupId>org.graalvm.buildtools</groupId>
         <artifactId>native-maven-plugin</artifactId>
       </plugin>
