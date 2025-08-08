@@ -1,6 +1,6 @@
 FROM jenkins/agent
 USER root
-RUN apt-get update && apt-get install -y lsb-release ca-certificates curl && \
+RUN apt-get update && apt-get install -y lsb-release ca-certificates curl unzip && \
     install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
     chmod a+r /etc/apt/keyrings/docker.asc && \
@@ -21,5 +21,12 @@ RUN curl -O https://archive.apache.org/dist/maven/maven-3/3.8.8/binaries/apache-
 
 ENV M2_HOME=/opt/apache-maven-3.8.8 \
     PATH=/opt/apache-maven-3.8.8/bin:$PATH
+
+
+# Install AWS CLI v2
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    rm -rf aws awscliv2.zip
 
 USER jenkins
