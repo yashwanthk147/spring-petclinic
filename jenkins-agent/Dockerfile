@@ -10,10 +10,16 @@ RUN apt-get update && apt-get install -y lsb-release ca-certificates curl && \
     apt-get update && apt-get install -y docker-ce-cli && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN curl -O https://archive.apache.org/dist/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz \
-tar -xvzf apache-maven-3.8.8-bin.tar.gz
-mv apache-maven-3.8.8 /opt/
-M2_HOME='/opt/apache-maven-3.8.8/'
-PATH="$M2_HOME/bin:$PATH"
-export PATH
+# Add docker group with GID 998 and add jenkins user to it
+RUN groupadd -g 998 docker && \
+    usermod -aG docker jenkins
+
+RUN curl -O https://archive.apache.org/dist/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz && \
+    tar -xvzf apache-maven-3.8.8-bin.tar.gz && \
+    mv apache-maven-3.8.8 /opt/ && \
+    rm apache-maven-3.8.8-bin.tar.gz
+
+ENV M2_HOME=/opt/apache-maven-3.8.8 \
+    PATH=/opt/apache-maven-3.8.8/bin:$PATH
+
 USER jenkins
