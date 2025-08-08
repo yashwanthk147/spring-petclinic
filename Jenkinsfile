@@ -4,7 +4,6 @@ pipeline {
           filename 'Dockerfile'
           dir 'jenkins-agent'          
           additionalBuildArgs '--pull' 
-          args '-u root:root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
