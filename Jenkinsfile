@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo 'Stopping and starting containers via Docker Compose...'
                 //sh 'docker compose down || true'
-                sh 'aws -version'
+                sh 'aws --version'
                 sh 'docker compose up -d'
                 sh 'docker ps -a'
             }
