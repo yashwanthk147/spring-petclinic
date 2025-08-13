@@ -3,7 +3,11 @@ pipeline {
         dockerfile {
           filename 'Dockerfile'
           dir 'jenkins-agent'          
-          additionalBuildArgs '--pull' 
+          additionalBuildArgs '--pull'
+          args '''
+            --network jenkins
+            -v dind_certs:/dind-certs:ro
+          '''
         }
     }
 
@@ -11,6 +15,9 @@ pipeline {
         IMAGE_NAME = 'spring-petclinic-app'
         IMAGE_TAG = "build-${BUILD_NUMBER}"
         CONTAINER_NAME = "spring-petclinic"
+        DOCKER_HOST       = 'tcp://docker:2376'
+        DOCKER_TLS_VERIFY = '1'
+        DOCKER_CERT_PATH  = '/dind-certs/client'
     }
 
     stages {
