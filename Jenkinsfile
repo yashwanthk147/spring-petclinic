@@ -1,13 +1,16 @@
 pipeline {
     agent {
-        dockerfile {
-          filename 'Dockerfile'
-          dir 'jenkins-agent'          
-          additionalBuildArgs '--pull'
-          args '''
+    dockerfile {
+        filename 'Dockerfile'
+        dir 'jenkins-agent'
+        additionalBuildArgs '--pull'
+        args '''
             --network jenkins
             -v dind_certs:/dind-certs:ro
-          '''
+            -e DOCKER_HOST=tcp://docker:2376
+            -e DOCKER_TLS_VERIFY=1
+            -e DOCKER_CERT_PATH=/dind-certs/client
+        '''
         }
     }
 
