@@ -4,7 +4,7 @@ pipeline {
       filename 'Dockerfile'
       dir 'jenkins-agent'
       additionalBuildArgs '--pull'
-      args "--network jenkins --volumes-from jenkins-master:ro -e DOCKER_HOST=tcp://docker:2376 -e DOCKER_TLS_VERIFY=1 -e DOCKER_CERT_PATH=/dind-certs/client"
+      args "--network agent-network -e DOCKER_HOST=tcp://docker:2376 -e DOCKER_TLS_VERIFY=1 -e DOCKER_CERT_PATH=/certs/client"
     }
   }
 
@@ -14,7 +14,7 @@ pipeline {
     CONTAINER_NAME = 'spring-petclinic'
     DOCKER_HOST       = 'tcp://docker:2376'
     DOCKER_TLS_VERIFY = '1'
-    DOCKER_CERT_PATH  = '/dind-certs/client'
+    DOCKER_CERT_PATH  = '/certs/client'
   }
 
   stages {
